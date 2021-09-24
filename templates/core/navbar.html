@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="author" content="sumit kumar">
+<title>Trial</title>
+<link href="css/bootstrap.css" rel="stylesheet" type="text/css">
+<link href="css/font-awesome.css" rel="stylesheet" type="text/css">
+<link href="css/style.css" rel="stylesheet" type="text/css">
+<script src="https://use.fontawesome.com/07b0ce5d10.js"></script>
+</head>
+
+<body>
+  <!--=========-TOP_BAR============-->
+   <nav class="topBar">
+     <div class="container">
+       <ul class="topBarNav pull-right">
+         <li class="dropdown">
+           {% if request.user.is_authenticated %}
+           <a href="{% url 'logout' %}" class="dropdown-toggle" data-toggle="dropdown" data- hover="dropdown" data-close-others="false"> <i class="fa fa-user mr-5"></i><span class="hidden-xs">Logout</span>
+             {% else %}
+             <li>
+             <a href="{% url 'login' %}" class="dropdown-toggle" data-toggle="dropdown" data- hover="dropdown" data-close-others="false"> <i class="fa fa-user mr-5"></i><span class="hidden-xs">Login</span>
+            <a href="{% url 'signup' %}" class="dropdown-toggle" data-toggle="dropdown" data- hover="dropdown" data-close-others="false"> <i class="fa fa-user mr-5"></i><span class="hidden-xs">Create Account</span></li>
+              {% endif %}
+         </a>
+         </li>
+         <li class="dropdown">
+           <a href="{% url 'core:cart' %}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="false"> <i class="fa fa-shopping-basket mr-5"></i> <span class="hidden-xs">
+                                Cart
+
+                            </span> </a>
+        </li>
+      </ul>
+    </div>
+  </nav><!--=========-TOP_BAR============-->
+
+ <!--=========MIDDEL-TOP_BAR============-->
+
+    <!-- <div class="middleBar">
+    <div class="container">
+  <div class="row display-table">
+    <div class="col-sm-7 vertical-align text-center">
+      <form action="{% url 'core:search' %}">
+        <div class="row grid-space-1">
+          <div class="col-sm-6">
+            <input type="search" name="q" class="form-control input-lg" placeholder="Search">
+         </div>
+          <div class="col-sm-3">
+            <input type="submit" class="btn btn-default btn-block btn-lg" value="Search">
+         </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div> -->
+
+
+<nav class="navbar navbar-main navbar-default" role="navigation" style="opacity: 1;">
+          <div class="container">
+            <!-- Brand and toggle -->
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-1">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+
+            <!-- Collect the nav links,  -->
+            <div class="collapse navbar-collapse navbar-1" style="margin-top: 0px;">
+              <ul class="nav navbar-nav">
+                <li><a href="{% url 'homepage' %}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">Home</a></li>
+
+                <li class="dropdown megaDropMenu">
+                  <a href="{% url 'core:productlist' %}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="false">All Products</a>
+                </li>
+                  <li class="dropdown">
+                   <a href="#" class="dropdown-toggle" data-toggle="dropdown"  data-hover="dropdown" data-close-others="false">Category   <i class="fa fa-angle-down ml-5"></i></a>
+                    <ul class="dropdown-menu dropdown-menu-left">
+                      {% for cat in category %}
+                         <li><a href="{% url 'core:catprod' cat.slug %}">{{cat.name}}</a></li>
+                         {% endfor %}
+                    </ul>
+                 </li>
+                 <div class="col-sm-7 vertical-align text-center">
+                     <!-- <form class="form-inline" action="{% url 'core:search' %}">
+                          <input class="form-control mr-sm-2" name="q"   type="search"  placeholder="Search" aria-label="Search">
+                          <button class="btn btn-outline-success my-2 my-sm-0"   type="submit">Search</button>
+                        </form> -->
+                        <form class="form-inline" action="{% url 'core:search' %}">
+                          <div class="row grid-space-1">
+                              <input type="search" name="q" class="form-control  mr-sm-2" placeholder="Search">
+
+                               <input type="submit" class="btn btn-outline- success my-2 my-sm-0" value="Search">
+                           </div>
+                        </form>
+                 </div>
+             </div><!-- /.navbar-collapse -->
+         </div>
+       </nav>
+
+
+
+
+<script src="js/jquery-3.1.1.js"></script>
+<script src="js/bootstrap.js"></script>
+  <script type="text/javascript">
+    ! function($, n, e) {
+      var o = $();
+      $.fn.dropdownHover = function(e) {
+        return "ontouchstart" in document ? this : (o = o.add(this.parent()), this.each(function() {
+          function t(e) {
+            o.find(":focus").blur(), h.instantlyCloseOthers === !0 && o.removeClass("open"), n.clearTimeout(c), i.addClass("open"), r.trigger(a)
+          }
+          var r = $(this),
+            i = r.parent(),
+            d = {
+              delay: 100,
+              instantlyCloseOthers: !0
+            },
+            s = {
+              delay: $(this).data("delay"),
+              instantlyCloseOthers: $(this).data("close-others")
+            },
+            a = "show.bs.dropdown",
+            u = "hide.bs.dropdown",
+            h = $.extend(!0, {}, d, e, s),
+            c;
+          i.hover(function(n) {
+            return i.hasClass("open") || r.is(n.target) ? void t(n) : !0
+          }, function() {
+            c = n.setTimeout(function() {
+              i.removeClass("open"), r.trigger(u)
+            }, h.delay)
+          }), r.hover(function(n) {
+            return i.hasClass("open") || i.is(n.target) ? void t(n) : !0
+          }), i.find(".dropdown-submenu").each(function() {
+            var e = $(this),
+              o;
+            e.hover(function() {
+              n.clearTimeout(o), e.children(".dropdown-menu").show(), e.siblings().children(".dropdown-menu").hide()
+            }, function() {
+              var t = e.children(".dropdown-menu");
+              o = n.setTimeout(function() {
+                t.hide()
+              }, h.delay)
+            })
+          })
+        }))
+      }, $(document).ready(function() {
+        $('[data-hover="dropdown"]').dropdownHover()
+      })
+    }(jQuery, this);
+  </script>
+</body>
+
+<style media="screen">
+  .mr-5 {
+    margin-right: 5px;
+}
+.ml-5 {
+    margin-left: 5px;
+}
+.w-100{
+    width: 100px;
+}
+.w-150{
+    width: 150px;
+}
+.w-250{
+    width: 250px;
+}
+
+form{
+  margin-left: 160px;
+  margin-top: 7px;
+}
+
+
+.topBar {
+    background-color: #ffffff;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    font-size: 13px;
+}
+.topBar ul {
+    margin: 0;
+}
+.topBar ul li {
+    line-height: 42px;
+}
+.topBar a {
+    color: #878c94;text-decoration:none;
+}
+.text-primary {
+    color: #0cd4d2;
+}
+
+.topBar ul.topBarNav {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.topBar ul.topBarNav li {
+    position: relative;
+    display: inline-block;
+    margin-right: -4px;
+    border-right: 1px solid rgba(0, 0, 0, 0.08);
+}
+.topBar ul.topBarNav li:last-child {
+    border-right: none;
+}
+.topBar ul.topBarNav li a {
+    display: block;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+
+
+
+.topBar ul.topBarNav li ul {
+    background-color: #ffffff;
+    position: absolute;
+    top: 42px;
+    left: auto;
+    min-width: 10px;
+    right: 4px;
+    border-radius: 0px;
+    border: solid 0px;
+    margin-right: -4px;
+    padding: 0;
+    list-style-type: none;
+    z-index: 9999;
+    -webkit-transition: all 0.1s ease-in-out;
+    -moz-transition: all 0.1s ease-in-out;
+    -ms-transition: all 0.1s ease-in-out;
+    -o-transition: all 0.1s ease-in-out;
+    transition: all 0.1s ease-in-out;
+    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+    -ms-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+}
+.topBar ul.topBarNav li ul li {
+    display: block;
+    line-height: 30px;
+    width: 100%;
+    border: none;
+}
+
+.topBar ul.topBarNav li a {
+    display: block;
+    padding-left: 12px;
+    padding-right: 12px;
+}
+.topBar .dropdown-menu > li > a {
+    display: block;
+    padding: 6px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #878c94;
+    font-size:15px
+    white-space: nowrap;
+}
+.topBar .dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus {
+    color: #00BCD4;
+    text-decoration: none;
+   background-color: rgba(0, 0, 0, 0.02);
+}
+
+
+/*CART/////////////////////*/
+
+
+.cart-items::-webkit-scrollbar {
+    width: 6px;
+    background-color: #ECECEC;
+}
+.cart-items::-webkit-scrollbar-track {
+
+}
+.cart-items::-webkit-scrollbar-thumb {
+    background-color: #084951;
+    outline: 1px solid black;
+}
+
+.topBar ul.topBarNav li ul.cart .cart-items{
+    padding: 10px;
+    height: 200px;
+    overflow: auto;
+}
+
+.topBar ul.topBarNav li ul.cart .cart-items .items {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.topBar ul.topBarNav li ul.cart .cart-items .items li {
+    overflow: hidden;
+    clear: left;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.topBar ul.topBarNav li ul.cart .cart-items .items li .product-image {
+    width: 60px;
+    float: left;
+}
+.topBar ul.topBarNav li ul.cart .cart-items .items li a {
+    margin: 0;
+    padding: 0;
+    line-height: normal;
+    background-color: transparent;
+    display: inline;
+}
+.topBar ul.topBarNav li ul.cart .cart-items .items li .product-details {
+    position: relative;
+    margin-left: 60px;
+    padding: 0 15px 0 10px;
+}
+.topBar ul.topBarNav li ul.cart .cart-items .items li .product-details .close-icon {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 10px;
+    line-height: normal;
+}
+.topBar ul.topBarNav li ul.cart .cart-footer {
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.02);
+}
+.topBar ul.topBarNav li ul.cart .cart-footer a {
+    text-align: center;
+    padding: 10px 20px;
+    margin: 0;
+    background-color: transparent;
+}
+
+
+/*/////////////////////////middleBar//////////////////////*/
+
+.middleBar {
+    padding: 10px 0 0 0;
+    margin: 0;min-height: 70px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+@media (min-width: 767px){
+
+.display-table {
+    display: table;
+    width: 100%;
+}
+.vertical-align {
+    display: table-cell;
+    vertical-align: middle;
+    float: none;
+}
+ .grid-space-1 div[class*="col-"] {
+    padding: 0 1px;
+}
+    }
+
+@media (max-width: 767px){
+
+div[class^="col-"] {
+    margin-bottom: 30px;
+}
+}
+
+.middleBar .form-control {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    border-radius: 0;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    background-color: #ffffff;
+    -webkit-transition: all 0.1s ease-in;
+    -moz-transition: all 0.1s ease-in;
+    -ms-transition: all 0.1s ease-in;
+    -o-transition: all 0.1s ease-in;
+    transition: all 0.1s ease-in;
+}
+
+.form-control.input-lg {
+    font-size: 15px;
+}
+
+.middleBar .btn.btn-default {
+    color: #ffffff;
+    background-color: #0cd4d2;
+    border: 1px solid #0cd4d2;
+    border-radius: 0px;
+}
+.middleBar .header-items .header-item {
+    display: inline-block;
+}
+
+.middleBar .header-items .header-item a {
+    position: relative;
+    display: block;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    border-radius: 100%;
+    text-align: center;
+    color: #35404f;
+}
+.middleBar .header-items .header-item a sub {
+    position: absolute;
+    bottom: -8px;
+    right: -8px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    text-align: center;
+    background-color: #0cd4d2;
+    -webkit-border-radius: 100%;
+    -moz-border-radius: 100%;
+    -ms-border-radius: 100%;
+    border-radius: 100%;
+    color: #ffffff;
+    font-size: 9px;
+    -webkit-transition: all 0.2s ease-in;
+    -moz-transition: all 0.2s ease-in;
+    -ms-transition: all 0.2s ease-in;
+    -o-transition: all 0.2s ease-in;
+    transition: all 0.2s ease-in;
+}
+.middleBar .header-items .header-item a:hover {
+    background-color: #0cd4d2;
+    color: #ffffff;
+}
+
+/*/////////////////////////navbar-default///////////////*/
+
+.navbar-default {
+    -webkit-box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: #ffffff;
+    margin-bottom: 0;
+    border: none;
+}
+
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
+    color: #0cd4d2;
+    background-color: transparent;
+}
+.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:after {
+   border-top:solid 2px #0cd4d2;
+
+}
+.navbar-default .dropdown-menu {
+    padding: 0;
+    font-size: 14px;
+    background-color: #ffffff;
+    color: #878c94;
+    border: none;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    border-radius: 0;
+    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+    -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+    -ms-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.08);
+    -webkit-transition: all 0.1s ease-in;
+    -moz-transition: all 0.1s ease-in;
+    -ms-transition: all 0.1s ease-in;
+    -o-transition: all 0.1s ease-in;
+    transition: all 0.1s ease-in;
+}
+
+.dropdown-menu > li > a {
+    display: block;
+    padding: 6px 20px;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.42857143;
+    color: #878c94;
+    white-space: nowrap;
+}
+.dropdown-menu > li > a:hover{
+     color: #0cd4d2;
+}
+
+
+/***********************
+     megaDropMenu
+////////////////////////////*/
+
+.navbar-default .container{
+    position:relative;
+}
+.navbar-default .navbar-collapse li.dropdown.megaDropMenu {
+    position: static;
+}
+
+.navbar-default .navbar-collapse li.dropdown.megaDropMenu .dropdown-menu{
+    width: 100%;
+}
+.navbar-default .navbar-collapse li.dropdown.megaDropMenu .dropdown-menu li ul li:first-child{
+    padding: 20px 0px 5px 15px;
+    font-size: 16px;
+    text-transform: uppercase;
+    /* text-align: center; */
+    color: #0cd4d2;
+}
+.navbar-default .navbar-collapse li.dropdown.megaDropMenu .dropdown-menu li ul li a{
+    display:block;color:#878c94;font-size: 14px;text-decoration:none;padding:8px 15px;
+}
+.navbar-default .navbar-collapse li.dropdown.megaDropMenu .dropdown-menu li ul li a:hover{
+     color: #00BCD4;
+    text-decoration: none;
+   background-color: rgba(0, 0, 0, 0.02);
+}
+
+.navbar-default .navbar-collapse li.dropdown.megaDropMenu .dropdown-menu img{
+    display: block;
+    max-width: 100%;
+    padding: 20px;
+}
+</style>
+
+<div class="container">
+ {% block body_block %}
+
+ {% endblock %}
+</div>
+</html>
